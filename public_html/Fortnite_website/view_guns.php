@@ -18,8 +18,15 @@ while ($row = $result->fetch_assoc()) {
     $guns[] = $row;
 }
 
+// Check if the user is logged in or not
+$is_logged_in = isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true;
+$username = $is_logged_in ? $_SESSION['username'] : null;  // Get username if logged in, otherwise null
+
 // Render the Twig template
 echo $twig->render('view_guns.html.twig', [
-    'guns' => $guns
+    'guns' => $guns,
+    'is_logged_in' => $is_logged_in,  // Pass the login status to the template
+    'username' => $username, // Pass the username if logged in
 ]);
+
 

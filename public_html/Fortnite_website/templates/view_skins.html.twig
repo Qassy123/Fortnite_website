@@ -22,8 +22,14 @@
                     <li class="nav-item"><a class="nav-link" href="view_items.php">View Items</a></li>
                     <li class="nav-item"><a class="nav-link" href="view_skins.php">View Skins</a></li>
                     <li class="nav-item"><a class="nav-link" href="view_vehicles.php">View Vehicles</a></li>
-                    <li class="nav-item"><a class="nav-link" href="login.php">Login</a></li>
-                    <li class="nav-item"><a class="nav-link" href="register.php">Register</a></li>
+
+                    {% if is_logged_in %}
+                        <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link" href="login.php">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="register.php">Register</a></li>
+                    {% endif %}
+                    
                     <li class="nav-item"><a class="nav-link" href="shop.php">Shop</a></li>
                     <li class="nav-item"><a class="nav-link" href="cart.php">Your Cart</a></li>
                 </ul>

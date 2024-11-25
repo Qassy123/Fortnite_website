@@ -18,7 +18,14 @@ while ($row = $result->fetch_assoc()) {
     $vehicles[] = $row;
 }
 
+// Check if the user is logged in
+$is_logged_in = isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true;
+$username = $is_logged_in ? $_SESSION['username'] : null;  // Get username if logged in, otherwise null
+
 // Render the Twig template
 echo $twig->render('view_vehicles.html.twig', [
-    'vehicles' => $vehicles
+    'vehicles' => $vehicles,
+    'is_logged_in' => $is_logged_in, // Pass login status to template
+    'username' => $username, // Optionally pass username if needed
 ]);
+

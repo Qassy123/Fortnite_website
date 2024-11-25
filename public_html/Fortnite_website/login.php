@@ -15,12 +15,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Collect form data
     $username = $_POST['username'];
     $password = $_POST['password'];
+    $remember_me = isset($_POST['remember_me']) ? true : false; // Check if remember me is selected
     
     // Call your loginUser function to validate user credentials
     if (loginUser($username, $password)) {
         $_SESSION['username'] = $username; // Store username in session
         $_SESSION['logged_in'] = true; // Mark user as logged in
-        
+
+        // If remember me is checked, set cookies
+        if ($remember_me) {
+            setcookie('username', $username, time() + (3600 * 24 * 30), '/'); // 30-day cookie for username
+            setcookie('logged_in', true, time() + (3600 * 24 * 30), '/'); // 30-day cookie for logged_in status
+        }
+
         // Redirect to homepage after successful login
         header("Location: index.php");
         exit(); // Ensure no further code is executed

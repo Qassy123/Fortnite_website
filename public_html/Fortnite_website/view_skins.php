@@ -18,7 +18,13 @@ while ($row = $result->fetch_assoc()) {
     $skins[] = $row;
 }
 
+// Check if the user is logged in
+$is_logged_in = isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true;
+$username = $is_logged_in ? $_SESSION['username'] : null;  // Get username if logged in, otherwise null
+
 // Render the Twig template
 echo $twig->render('view_skins.html.twig', [
-    'skins' => $skins
+    'skins' => $skins,
+    'is_logged_in' => $is_logged_in, // Pass login status to template
+    'username' => $username, // Optionally pass username if needed
 ]);

@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ title }}</title>
+    <title>Logout</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> <!-- jQuery -->
 </head>
 <body>
     <header>
@@ -22,16 +21,8 @@
                     <li class="nav-item"><a class="nav-link" href="view_items.php">View Items</a></li>
                     <li class="nav-item"><a class="nav-link" href="view_skins.php">View Skins</a></li>
                     <li class="nav-item"><a class="nav-link" href="view_vehicles.php">View Vehicles</a></li>
-
-                    {% if logged_in %}
-                        <!-- If logged in, show the Logout link -->
-                        <li class="nav-item"><a class="nav-link" href="index.php?logout=true">Logout</a></li>
-                    {% else %}
-                        <!-- If not logged in, show Login and Register links -->
-                        <li class="nav-item"><a class="nav-link" href="login.php">Login</a></li>
-                        <li class="nav-item"><a class="nav-link" href="register.php">Register</a></li>
-                    {% endif %}
-
+                    <li class="nav-item"><a class="nav-link" href="login.php">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="register.php">Register</a></li>
                     <li class="nav-item"><a class="nav-link" href="shop.php">Shop</a></li>
                     <li class="nav-item"><a class="nav-link" href="cart.php">Your Cart</a></li>
                 </ul>
@@ -44,37 +35,14 @@
     </header>
 
     <main>
-        <h2>Welcome to Fortnite Guide</h2>
-        <div id="suggestions"></div> <!-- Autocomplete suggestions -->
-        <p>Search for Guns, Items, Skins, and Vehicles using the search bar above.</p>
+        <h2>You have successfully logged out</h2>
+        <p>Thank you for visiting! You have been logged out of your account.</p>
+        <p><a href="index.php">Go back to homepage</a></p>
     </main>
 
     <footer>
         <p>&copy; 2024 Fortnite Guide. All rights reserved.</p>
     </footer>
-
-    <script>
-        $(document).ready(function() {
-            $("#search-input").on("keyup", function() {
-                let query = $(this).val();
-                if (query.length > 2) {
-                    $.ajax({
-                        url: "autocomplete.php",
-                        method: "GET",
-                        data: { query: query },
-                        success: function(data) {
-                            $("#suggestions").html(data);
-                        },
-                        error: function() {
-                            console.error("AJAX error occurred.");
-                        }
-                    });
-                } else {
-                    $("#suggestions").html("");
-                }
-            });
-        });
-    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

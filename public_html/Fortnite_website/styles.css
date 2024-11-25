@@ -161,7 +161,38 @@ p, li {
     background-color: #2980b9;
 }
 
-/* Responsive Design */
+/* Autocomplete Styles */
+#suggestions {
+    position: absolute;
+    top: 50px; /* Adjust this value based on your design */
+    left: 0;
+    width: 100%;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    max-height: 200px;
+    overflow-y: auto;
+    display: none; /* Hidden by default */
+}
+
+.suggestion-item {
+    padding: 10px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+.suggestion-item:hover {
+    background-color: #f3f3f3;
+}
+
+#search-input:focus + #suggestions {
+    display: block; /* Show suggestions when the input is focused */
+}
+
+/* For mobile screens */
 @media (max-width: 768px) {
     nav {
         flex-direction: column;
@@ -173,5 +204,9 @@ p, li {
 
     table, th, td {
         font-size: 0.9em;
+    }
+
+    #suggestions {
+        width: 100%;
     }
 }
