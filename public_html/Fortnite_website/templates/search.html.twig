@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Results</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="index.php">Fortnite Guide</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="view_guns.php">View Guns</a></li>
+                <li class="nav-item"><a class="nav-link" href="view_items.php">View Items</a></li>
+                <li class="nav-item"><a class="nav-link" href="view_skins.php">View Skins</a></li>
+                <li class="nav-item"><a class="nav-link" href="view_vehicles.php">View Vehicles</a></li>
+                <li class="nav-item"><a class="nav-link" href="login.php">Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="register.php">Register</a></li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0" action="search.php" method="GET">
+                <input class="form-control mr-sm-2" type="search" id="search-input" name="query" placeholder="Search" aria-label="Search" value="{{ searchQuery }}">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h2>Search Results for "{{ searchQuery }}"</h2>
+        <div id="suggestions"></div> <!-- Where autocomplete suggestions will appear -->
+        
+        {% if searchResults is not empty %}
+            {% for result in searchResults %}
+                <div class="search-item">
+                    <h4>{{ result.Name }}</h4>
+                    <p><strong>Type:</strong> {{ result.Type }}</p>
+                    {% if result.table_name == 'Guns' %}
+                        <p><strong>Damage:</strong> {{ result.info }}</p>
+                    {% elseif result.table_name == 'Items' %}
+                        <p><strong>Effect:</strong> {{ result.info }}</p>
+                    {% elseif result.table_name == 'Skins' %}
+                        <p><strong>Price:</strong> ${{ result.info }}</p>
+                    {% elseif result.table_name == 'Vehicles' %}
+                        <p><strong>Speed:</strong> {{ result.info }} km/h</p>
+                        <p><strong>Durability:</strong> {{ result.durability }}</p>
+                    {% endif %}
+                    <p><strong>Rarity:</strong> {{ result.rarity }}</p>
+                    <hr>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No results found for "{{ searchQuery }}".</p>
+        {% endif %}
+    </div>
+
+    <!-- Optional JavaScript for Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
