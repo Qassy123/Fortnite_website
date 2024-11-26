@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <title>weather app</title>
+    </head>
+    <body>
+	
+	
+	<h1 style="">Weather in Birmingham</h1>
+    <p><span id="city"></span></p>
+    <p><span id="myWeather">Please wait...</span></p>	
+	<p> <span id="weather_temp">Please wait...</span></p>
+	<p><span id="wind speed">Please wait...</span></p>
+	<p><span id="myLastUpdated">Please wait...</span></p>
+	<!--<img id="img_icon" src="">-->
+	
+	
+	<script>
+		
+	    // Fetch Birmingham weather data from API
+           fetch('https://mi-linux.wlv.ac.uk/~2364710/my-api.php?city=Birmingham')
+	
+        // Convert response string to json object
+           .then(response => response.json())
+           .then(response => {
+ 
+        // Display whole API response in browser console (take a look at it!)
+           console.log(response);
+		
+        // Copy one element of response to our HTML paragraph
+		   document.getElementById("city").innerHTML = response.city;
+		   document.getElementById("myWeather").innerHTML = response.weather_description;
+           document.getElementById("weather_temp").innerHTML = response.weather_temperature + '°C';
+           document.getElementById("wind speed").innerHTML = response.weather_wind + 'm/s';
+		   document.getElementById("myLastUpdated").innerHTML = response.weather_when;
+		   
+		   setTimeout(() => {
+            location.reload();
+        }, 300000); // 300000 milliseconds = 5 minutes
+		
+		  })
+  .catch(err => {
+	
+    // Display errors in console
+    console.log(err);
+});
+
+	</script>
+  </body>
+</html>

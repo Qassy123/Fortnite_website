@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+	<link rel="shortcut icon" href="favicon.ico" />
+    <title>Weather App</title>
+  </head>
+  <body>
+	<h1>Weather in Birmingham</h1>
+	<p id="myWeather">Please wait...</p>
+	<p id="myTemperature">Please wait...</p>
+	<p id="myLastUpdated">Please wait...</p>
+	<script>
+	
+// Check browser cache first, use if there and less than 10 seconds old
+if(localStorage.when != null
+   && parseInt(localStorage.when) + 10000 > Date.now()) {
+
+	let freshness = Math.round((Date.now() - localStorage.when)/1000);
+	document.getElementById("myWeather").innerHTML = localStorage.myWeather;
+	document.getElementById("myTemperature").innerHTML = localStorage.myTemperature;
+		
+	document.getElementById("myLastUpdated").innerHTML = 'This data was last updated ' + freshness + ' second(s) ago';
+	
+// No local cache, access network
+} else {
+	
+	// Fetch weather data from API for given city
+	fetch('https://mi-linux.wlv.ac.uk/~2364710/my-api.php?city=Birmingham')
+		
+	  // Convert response string to json object
+	  .then(response => response.json())
+	  .then(response => {
+			
+		// Copy one element of response to our HTML paragraph
+		document.getElementById("myWeather").innerHTML = response.weather_description;
+		document.getElementById("myTemperature").innerHTML = response.weather_temperature + '°';
+		document.getElementById("myLastUpdated").innerHTML = response.weather_when;
+		
+		// Save new data to browser, with new timestamp
+		localStorage.myWeather = response.weather_description;
+		localStorage.myTemperature = response.weather_temperature + '°';
+		localStorage.when = Date.now(); // milliseconds since January 1 1970
+		
+	  })
+	  .catch(err => {
+		
+		// Display errors in console
+		console.log(err);
+	});
+
+}	
+	</script>
+  </body>
+</html>
